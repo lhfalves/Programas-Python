@@ -1,0 +1,53 @@
+
+# Exercício 1 - Crie uma lista de 3 elementos e calcule a terceira potência de cada elemento.
+
+def calc(x):
+    return x**3
+
+lista = [3,4,5]
+numeroscubo = list(map(calc, lista))
+print(numeroscubo)
+
+#--------------------------------------------------------------------------------------------
+# Exercício 2 - Reescreva o código abaixo, usando a função map(). O resultado final deve ser o mesmo!
+palavras = 'A Data Science Academy oferce os melhores cursos de análise de dados do Brasil.'.split()
+resultado = [[w.upper(), w.lower(), len(w)] for w in palavras]
+for i in resultado:
+    print (i)
+
+#-----------------------------------------------------------------------------------------------
+# Solução
+resultado = map(lambda w: [w.upper(), w.lower(), len(w)], palavras)
+for i in resultado:
+    print (i)
+
+#------------------------------------------------------------------------------------------------
+# Exercício 3 - Calcule a matriz transposta da matriz abaixo.
+# Caso não saiba o que é matriz transposta, visite este link: https://pt.wikipedia.org/wiki/Matriz_transposta
+# Matriz transposta é um conceito fundamental na construção de redes neurais artificiais, base de sistemas de IA.
+
+matrix = [[1, 2], [3, 4], [5, 6], [7, 8]]
+
+transposed_matrix = [[row[i] for row in matrix] for i in range(len(matrix[0]))]
+
+for row in transposed_matrix:
+    print(row)
+
+#--------------------------------------------------------------------------------------------------------------
+# Exercício 4 - Crie duas funções, uma para elevar um número ao quadrado e outra para elevar ao cubo. 
+# Aplique as duas funções aos elementos da lista abaixo. 
+# Obs: as duas funções devem ser aplicadas simultaneamente.
+lista = [0, 1, 2, 3, 4]
+
+def square(x):
+        return (x**2)
+    
+def cube(x):
+        return (x**3)
+
+funcs = [square, cube]
+
+for i in lista:
+    valor = map(lambda x: x(i), funcs)
+    print(list((valor)))
+
