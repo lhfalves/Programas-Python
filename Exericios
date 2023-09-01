@@ -81,4 +81,19 @@ lista = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 result = [print(element) for index, element in enumerate(lista) if index > 5]
 
 
+#--------------------------------------------------------------------------------------------
+# Exercício 10 - Crie um regex em Python para extrair a palavra que aparece depois das palavras 
+# Data e Science na frase: 'A Data Science Academy oferce os melhores cursos de análise de dados do Brasil.'
+
+import re
+
+frase = 'A Data Science Academy oferece os melhores cursos de análise de dados do Brasil.'
+
+palavras_encontradas = re.findall(r'Data Science\s+(\w+)', frase)
+
+print(palavras_encontradas)
+
+
+
+
 
