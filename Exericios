@@ -59,4 +59,26 @@ listaB = [10, 11, 12]
 list(map( pow, listaA, listaB))
 
 #------------------------------------------------------------------------------------------
+# Exercício 6 - Considerando o range de valores abaixo, use a função filter() para retornar 
+# apenas os valores negativos.
+lista = range(-5, 5)
+list(filter(lambda num: num < 0, lista))
+
+
+#----------------------------------------------------------------------------------------
+# Exercício 7 - Usando a função filter(), encontre os valores que são comuns às duas listas abaixo.
+a = [1,2,3,5,7,9]
+b = [2,3,5,6,7,8]
+
+common_values = list(filter(lambda x: x in b, a))
+
+print(common_values)
+
+#-----------------------------------------------------------------------------------------
+# Exercício 9 - Considere a lista abaixo e retorne apenas os elementos cujo índice for maior que 5.
+lista = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+
+result = [print(element) for index, element in enumerate(lista) if index > 5]
+
+
 
