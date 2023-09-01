@@ -1,0 +1,23 @@
+# Pseudo código do Jogo da Forca
+
+#1. Escolha uma palavra secreta.
+#2. Inicialize uma lista vazia para armazenar as letras adivinhadas.
+#3. Inicialize uma variável para contar o número de tentativas restantes.
+#4. Inicialize uma variável para determinar se o jogo terminou.
+#5. Exiba uma mensagem de boas-vindas.
+#6. Enquanto o jogo não terminar:
+#   7.1. Exiba a palavra secreta com espaços para as letras não adivinhadas.
+#   7.2. Exiba as letras já adivinhadas.
+#   7.3. Exiba o número de tentativas restantes.
+#   7.4. Solicite ao jogador uma letra.
+#   7.5. Verifique se a letra já foi adivinhada ou se é uma letra válida.
+#       Se não for válida, exiba uma mensagem de erro e continue para 7.4.
+#   7.6. Se a letra estiver na palavra secreta:
+#       7.6.1. Atualize a exibição da palavra secreta para incluir a letra.
+#       7.6.2. Verifique se o jogador adivinhou todas as letras da palavra secreta.
+#           Se sim, exiba uma mensagem de vitória e termine o jogo.
+#   7.7. Se a letra não estiver na palavra secreta:
+#       7.7.1. Reduza o número de tentativas restantes.
+#       7.7.2. Verifique se o jogador está sem tentativas.
+#           Se sim, exiba uma mensagem de derrota e termine o jogo.
+# 8. Fim do jogo.
