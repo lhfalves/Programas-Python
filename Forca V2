@@ -123,7 +123,8 @@ def game():
         print(display_hangman(chances))
         print("Palavra: ", tabuleiro)
         print("\n")
-        
+        print('Você tem : ', chances, 'chances!')
+
         # Tentativa
         tentativa = input("\nDigite uma letra: ")
         
