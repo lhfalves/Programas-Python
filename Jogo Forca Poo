@@ -1,0 +1,183 @@
+# Projeto 2 - Desenvolvimento de Game em Linguagem Python - Versão 2
+# exercício com Programação em objeto
+
+import random
+import os
+
+
+class Forca():
+
+    def __init__(self):
+        print('obj criado')
+
+    def mt_palavras(self, palavras):
+        self.palavras = palavras  # ['banana', 'abacate', 'uva', 'morango', 'laranja']
+
+    def met_chance(self, chance1):  # Número de chances
+        self.chance1 = chance1
+
+    def met_tentativa(self, tentativa1):
+        self.tentativa1 = tentativa1
+
+    def met_palavra(self, palavra1):
+        self.palavra1 = palavra1
+
+    def met_tabuleiro(self, tabuleiro1):
+        self.tabuleiro1 = tabuleiro1
+
+    # Método de limpar a tela
+    def limpa_tela(self):
+        os.system('cls')
+
+
+
+
+def display_hangman(chances):
+        # Lista de estágios da forca
+        stages = [  # estágio 6 (final)
+            """
+               --------
+               |      |
+               |      O
+               |     \\|/
+               |      |
+               |     / \\
+               -
+            """,
+            # estágio 5
+            """
+               --------
+               |      |
+               |      O
+               |     \\|/
+               |      |
+               |     / 
+               -
+            """,
+            # estágio 4
+            """
+               --------
+               |      |
+               |      O
+               |     \\|/
+               |      |
+               |      
+               -
+            """,
+            # estágio 3
+            """
+               --------
+               |      |
+               |      O
+               |     \\|
+               |      |
+               |     
+               -
+            """,
+            # estágio 2
+            """
+               --------
+               |      |
+               |      O
+               |      |
+               |      |
+               |     
+               -
+            """,
+            # estágio 1
+            """
+               --------
+               |      |
+               |      O
+               |    
+               |      
+               |     
+               -
+            """,
+            # estágio 0
+            """
+               --------
+               |      |
+               |      
+               |    
+               |      
+               |     
+               -
+            """
+        ]
+        return stages[chances]
+
+
+
+
+
+
+
+if __name__ == "__main__":
+    plv = Forca()
+    plv.limpa_tela()
+
+    # Lista de palavras para o jogo
+    plv.mt_palavras(['banana', 'abacate', 'uva', 'morango', 'laranja'])
+
+    # Escolhe randomicamente uma palavra
+    palavra = random.choice(plv.palavras)
+
+    # Lista  de letras  da palavra
+    lista_letras_palavras = [letra for letra in palavra]
+
+    # Cria o tabuleiro com o caracter "_" multiplicado pelo comprimento da palavra
+    plv.met_tabuleiro( ["_"] * len(palavra) )
+
+    # Número de chances
+    plv.met_chance(6)
+    chance = plv.chance1
+
+    # Lista para as letras digitadas
+    plv.met_tentativa([])
+
+    print("\nBem vindo ao jogo da forca!")
+    print("Adivinhe a palavra abaixo:\n")
+
+    # Loop enquanto número de chances for maior do que zero
+    while chance > 0:
+
+        print(display_hangman(chance) )
+        print("Palavra: ", plv.tabuleiro1)
+        print("\n")
+        print('Você tem : ', chance, 'chances!')
+        # Tentativa
+        tentativa = input("\nDigite uma letra: ")
+
+        # Condicional
+        if tentativa in plv.tentativa1:
+            print("Você já tentou essa letra. Escolha outra!")
+            continue
+
+        # Lista de tentativas (letras)
+        plv.tentativa1.append(tentativa)
+
+        # Condicional
+        if tentativa in lista_letras_palavras:
+
+            print("Você acertou a letra!")
+
+            # Loop
+            for indice in range(len(lista_letras_palavras)):
+
+                # Condicional
+                if lista_letras_palavras[indice] == tentativa:
+                    plv.tabuleiro1[indice] = tentativa
+
+            # Se todos os espaços foram preenchidos, o jogo acabou
+            if "_" not in plv.tabuleiro1:
+                print("\nVocê venceu! A palavra era: {}".format(palavra))
+                break
+        else:
+            print("Ops. Essa letra não está na palavra!")
+            # Decremento
+            chance -= 1
+
+    # Condicional
+    if "_" in plv.tabuleiro1:
+        print("\nVocê perdeu! A palavra era: {}.".format(palavra))
