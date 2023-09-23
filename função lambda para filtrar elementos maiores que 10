@@ -1,0 +1,9 @@
+def filtraElementos(listaA):
+    
+	# Usamos uma função lambda para filtrar elementos maiores que 10
+    resultado = list(filter(lambda x: x > 10, listaA))
+    return resultado
+
+minha_lista = [5, 12, 8, 15, 3, 20, 7]
+resultado_filtrado = filtraElementos(minha_lista)
+print(resultado_filtrado) 
