@@ -1,0 +1,15 @@
+# função para remover vazios de uma lista
+def removerElementosVazios(lista_de_nomes):
+    
+    resultado = []
+    # Adiciona a string limpa à lista de resultados
+    for string in lista_de_nomes:
+        if not(string==''):
+            resultado.append(string)    
+      
+    
+    return resultado
+                         
+minha_lista = ['Araújo', 'Alexandre', 'Silva', 'Flávio', '']
+resultado_limpo = removerElementosVazios(minha_lista)
+print(resultado_limpo)
