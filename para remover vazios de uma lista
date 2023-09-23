@@ -1,0 +1,9 @@
+#A solução recomendada é usar a função integrada filter(function, iterable), 
+# que constrói uma iterator de elementos de um iterable para o qual o especificado 
+#função retorna verdadeiro. Se a função for None, a função de identidade é assumida, 
+#ou seja, todos os elementos de iterable que são falsos são removidos. Aqui está um exemplo 
+# de trabalho usando filtros:
+
+minha_lista = ['Araújo', 'Alexandre', 'Silva', 'Flávio', '']
+Nome_sem_espaco = list(filter(None, minha_lista))
+print( Nome_sem_espaco )
