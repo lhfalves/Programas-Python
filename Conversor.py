@@ -72,7 +72,7 @@ while testador:
         a = int( input('digite a opção 0 ou 7 ? '))
         print("\n")
 
-        if a > 0 and a < 8 :
+        if a >= 0 and a < 8 :
             testador = False
         else:
             mensagem("Você escolheu uma opção fora do intervalo do Menu")
