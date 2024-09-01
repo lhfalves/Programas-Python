@@ -1,0 +1,124 @@
+# Sistema bancário com Python
+# Objetivo de realizar depositos, saques e extrato
+# Permitir apenas 3 saques de R$ 500.00
+# Listar extrato com todas as operaçoes realizadas e apresentar saldo ao final
+
+
+from datetime import date, time, datetime
+
+def menu():
+
+    print(" Escolha uma das Opções abaixo: \n")
+
+    print("[d] Depositar ")
+    print("[s] Sacar" )
+    print("[e] Extrato")
+    print("[q] Sair")
+    #print("\n")
+    
+    return
+
+saldo = 0
+limite = 500
+extrato, sld ="", ""
+numero_saques = 0
+LIMITE_SAQUES = 3
+data_atual = datetime.now()
+print(data_atual.strftime('%d/%m/%y %H:%M:%S'))
+dt = str(data_atual.strftime('%d/%m/%y %H:%M:%S') )
+
+
+def teste_erro() :
+    try:
+        valor = int(input('Digite o valor: '))
+    except ValueError:
+        print("Valor informado inválido ")
+        valor = 0
+    return valor
+
+
+def testa_limite_saque():
+
+    # Verifica se a data atual (dt) é a mesma do extrato.
+    #Caso negativo permite retorno do limite de saque para 3
+
+    dt = str(data_atual.strftime('%d/%m/%y') )
+    #localiza a última ocorrência da barra da data
+    localizastring = extrato.rfind('/')
+    # manipula a string e fatia a parte da data
+    fatia = extrato[localizastring-5 : localizastring+3]
+    #Caso a a data atual seja diferente da última data do extrato volta o LIMITE de Saque para 3
+    if dt != fatia :
+        LIMITE_SAQUES = 3
+
+    #print( len(dt), len(extrato), localizastring, dt, fatia )
+
+
+
+while True:
+
+    menu()
+
+    opcao = input("Selecione uma opção: ")
+
+    if opcao == "d" :
+        print(" Opção Depósito ")
+        print("Qual valor deseja depositar ? ")
+
+        valor_depositado =  teste_erro()
+
+        if valor_depositado > 0 :
+            saldo = saldo + valor_depositado
+            sld = str(saldo)
+            #linha_do_extrato ["data","saldo","operacao"] = dt,sld,"C"
+            extrato = extrato + str(dt) + " "+ str(valor_depositado) + "C" + "\n"
+
+
+    elif opcao == "s" :
+
+        #testa o limite de saques
+        if LIMITE_SAQUES > 0 :
+
+            print(" Opção Saque ")
+            print(" Qual valor deseja sacar ? ")
+            valor_saque = teste_erro()
+
+            if valor_saque> 0 and valor_saque<501 :
+                if saldo > 0 :
+                    # teste_saldo verifica se o saldo ficara menor do que zero
+                    teste_saldo = saldo - valor_saque
+                    if teste_saldo >= 0 :
+                        LIMITE_SAQUES = LIMITE_SAQUES - 1
+                        saldo = saldo - valor_saque
+                        sld = str(saldo)
+                        extrato = extrato + str(dt) + " " + str(valor_saque) + "D" + "\n"
+                    else:
+                        print (" Saldo insuficiente para realizar este saque! Operação não realizada")
+                else:
+                    print (" Sua conta não possui saldo. Deposite algum valor na conta!")
+            else:
+                print(" Escolha um valor positivo e menor do que R$ 500,00")
+
+        else :
+            print ("Você já realizou o máximo de saques nesta data. Operação não realizada ")
+
+
+
+    elif opcao == "e" :
+        # evita erro caso o usuáro escolha extrato sem saldo
+        if len(sld)>0 :
+            print(" Extrato ")
+            print( extrato )
+            #print( f"Saldo em conta: R${saldo:,.2f}" )
+            testa_limite_saque()
+
+        print ( f"Saldo em conta: R${saldo:,.2f}")
+
+
+    elif opcao == "q" :
+        print(" Sair ")
+        break
+
+    else:
+        print(" Opção inválida! Por favor, selecione a opção do Menu.")
+
