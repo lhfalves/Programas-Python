@@ -4,7 +4,6 @@
 # Listar extrato com todas as operaçoes realizadas e apresentar saldo ao final
 
 
-
 from datetime import date, time, datetime
 
 def menu():
@@ -55,10 +54,11 @@ def testa_limite_saque():
     # manipula a string e fatia a parte da data
     fatia = extrato[localizastring-5 : localizastring+3]
     #Caso a a data atual seja diferente da última data do extrato volta o LIMITE de Saque para 3
+    
     if dt != fatia :
-        LIMITE_SAQUES = 3
+        return True
 
-    return LIMITE_SAQUES
+       
 
 
 
@@ -87,6 +87,8 @@ while True:
 
 
     elif opcao == "s" :
+
+        if testa_limite_saque() : LIMITE_SAQUES = 3
 
         #testa o limite de saques
         if LIMITE_SAQUES > 0 :
@@ -131,7 +133,7 @@ while True:
         # evita erro caso o usuáro escolha extrato sem saldo
         if len(sld)>0 :
             print( extrato )
-            testa_limite_saque()
+
 
         print ( f"Saldo em conta: R${saldo:,.2f}")
         print(50 * "/")
@@ -143,4 +145,6 @@ while True:
 
     else:
         print(" Opção inválida! Por favor, selecione a opção do Menu.")
+
+
 
