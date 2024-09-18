@@ -1,32 +1,38 @@
 from datetime import date, time, datetime
+import textwrap
 
-# -----------Menu de atualização -------------------------------
+# -------Função Menu de atualização -------------------------------
 def menu():
     print("\n")
     print( 20 * "/", " Menu ", 20 * "/")
-    print("[d] Depositar ")
-    print("[s] Sacar")
-    print("[e] Extrato")
-    print("[q] Sair")
+    print("[d]  Depositar ")
+    print("[s]  Sacar")
+    print("[e]  Extrato")
+    print("[nc] Nova conta")
+    print("[lc] Listar contas")
+    print("[nu] Novo usuário ")
+    print("[q]  Sair")
 
-    return
+
 
 
 saldo = 0
 limite = 500
-extrato, sld = "", ""
+extrato = ""
 numero_saques = 0
 LIMITE_SAQUES = 3
+AGENCIA = "0001"
+usuarios = []
+contas = []
 
-
-# -----------Atualização de datas do sistema -------------------------------
+# ------Função atualiza_data. Atualização de datas do sistema -------------------------------
 def atualiza_data():
     data_atual = datetime.now()
     #print(data_atual.strftime('%d/%m/%y %H:%M:%S'))
     dt = str(data_atual.strftime('%d/%m/%y %H:%M:%S'))
     return dt
 
-# -----------Testa inconsistências do valor digitado pelo usuário -------------------------------
+# ------Função teste_erro. Testa inconsistências do valor digitado pelo usuário -------------------------------
 def teste_erro():
     try:
         valor = float(input('Digite o valor: '))
@@ -41,7 +47,7 @@ def teste_erro():
         return valor
 
 
-# -----------Verifica se a data atual é a mesma do extrato. -------------------------------
+# ------Função testa_limite_saque. Verifica se a data atual é a mesma do extrato. -------------------------------
 def testa_limite_saque():
     # Verifica se a data atual (dt) é a mesma do extrato.
     # Caso negativo permite retorno do limite de saque para 3
@@ -59,7 +65,7 @@ def testa_limite_saque():
     else:
         return False
 
-# ---------Recebe os argumentos saldo, extrato por nome (positional Only Arguments). -----
+# -----Função Depositar. Recebe os argumentos saldo, extrato por nome (positional Only Arguments). -----
 def depositar(saldo, extrato, /):
     # função de deposito
     print(" Opção Depósito ", 20 * "/")
@@ -77,7 +83,7 @@ def depositar(saldo, extrato, /):
     return saldo, extrato
 
 
-# ---------Recebe os argumentos saldo, extrato e LIMITE_SAQUES por nome (Keyword-Only Arguments). -----
+# -----Função Sacar. Recebe os argumentos saldo, extrato e LIMITE_SAQUES por nome (Keyword-Only Arguments). -----
 def sacar(*, saldo, extrato, LIMITE_SAQUES ):
 
     if testa_limite_saque(): LIMITE_SAQUES = 3
@@ -111,7 +117,7 @@ def sacar(*, saldo, extrato, LIMITE_SAQUES ):
     return saldo, extrato, LIMITE_SAQUES
 
 
-# ---------Recebe os argumentos saldo; e extrato por nome (Keyword-Only Arguments). -----
+# ----Função exibir_extrato. Recebe os argumentos saldo; e extrato por nome (Keyword-Only Arguments). -----
 def exibir_extrato(saldo,  *,extrato):
 
     print(" Opção Extrato ", 20 * "/")
@@ -121,6 +127,50 @@ def exibir_extrato(saldo,  *,extrato):
 
     print(f"Saldo em conta: R${saldo:,.2f}")
     print(20 * "/")
+
+
+def criar_usuario(usuarios):
+    cpf = input("Informe o CPF (somente número): ")
+    usuario = filtrar_usuario(cpf, usuarios)
+
+    if usuario:
+        print("\n@@@ Já existe usuário com esse CPF! @@@")
+        return
+
+    nome = input("Informe o nome completo: ")
+    data_nascimento = input("Informe a data de nascimento (dd-mm-aaaa): ")
+    endereco = input("Informe o endereço (logradouro, nro - bairro - cidade/sigla estado): ")
+
+    usuarios.append({"nome": nome, "data_nascimento": data_nascimento, "cpf": cpf, "endereco": endereco})
+
+    print("=== Usuário criado com sucesso! ===")
+
+
+def filtrar_usuario(cpf, usuarios):
+    usuarios_filtrados = [usuario for usuario in usuarios if usuario["cpf"] == cpf]
+    return usuarios_filtrados[0] if usuarios_filtrados else None
+
+
+def criar_conta(agencia, numero_conta, usuarios):
+    cpf = input("Informe o CPF do usuário: ")
+    usuario = filtrar_usuario(cpf, usuarios)
+
+    if usuario:
+        print("\n=== Conta criada com sucesso! ===")
+        return {"agencia": agencia, "numero_conta": numero_conta, "usuario": usuario}
+
+    print("\n@@@ Usuário não encontrado, fluxo de criação de conta encerrado! @@@")
+
+
+def listar_contas(contas):
+    for conta in contas:
+        linha = f"""\
+            Agência:\t{conta['agencia']}
+            C/C:\t\t{conta['numero_conta']}
+            Titular:\t{conta['usuario']['nome']}
+        """
+        print("=" * 100)
+        print(textwrap.dedent(linha))
 
 
 while True:
@@ -149,6 +199,23 @@ while True:
     elif opcao == "e":
 
         exibir_extrato(saldo, extrato=extrato)
+
+    # opção de criar_usuario no programa =============================================
+    elif opcao == "nu":
+
+        criar_usuario(usuarios)
+
+    # opção de criar uma nova conta no programa =============================================
+    elif opcao == "nc":
+        numero_conta = len(contas) + 1
+        conta = criar_conta(AGENCIA, numero_conta, usuarios)
+
+        if conta:
+            contas.append(conta)
+
+    # opção de listar conta no programa =============================================
+    elif opcao == "lc":
+        listar_contas(contas)
 
 
     # opção de sair do programa =============================================
